@@ -1,0 +1,15 @@
+BoxLayout:
+    orientation: 'vertical'
+    spacing: 10
+    padding: 20
+
+    Label:
+        id: display
+        text: app.current_text
+        font_size: 40
+        color: 1, 1, 1, 1
+
+    Button:
+        text: 'Next'
+        font_size: 30
+        on_press: app.cycle_text()
