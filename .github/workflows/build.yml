@@ -1,0 +1,26 @@
+name: Build APK
+
+on:
+  workflow_dispatch:  # 也可手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 官方 buildozer-action，封装好 Docker + SDK/NDK
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          command: buildozer android debug
+          workdir: .               # buildozer.spec 所在目录
+          repository_root: .       # 源码根目录
+
+      # 把 APK 作为工件下载
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-apk
+          path: bin/*.apk
