@@ -20,7 +20,11 @@ jobs:
 
       - name: Ensure buildozer.spec
         run: |
-          buildozer init
+          buildozer init                # 生成 spec
+          sed -i 's/^title.*/title = Demo/' buildozer.spec
+          sed -i 's/^requirements.*/requirements = python3,kivy/' buildozer.spec
+          buildozer android debug       # 首次 30 min，后续 1 min
+
       # 官方 buildozer-action，封装好 Docker + SDK/NDK
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
